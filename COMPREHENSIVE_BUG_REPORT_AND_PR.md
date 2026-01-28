@@ -1,275 +1,83 @@
-╔════════════════════════════════════════════════════════════════════════════════╗
-║                                                                                ║
-║                     HACKERRANK SOLUTIONS BUG REPORT & PR                       ║
-║                                                                                ║
-║                  Comprehensive Repository Analysis & Improvements              ║
-║                                                                                ║
-╚════════════════════════════════════════════════════════════════════════════════╝
+# HackerRank Solutions — Bug Report & PR Description
 
+Date: 2026-01-28
+Repo: https://github.com/zwbproducts/HackerRank-Solutions
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- EXECUTIVE SUMMARY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## Summary
 
-Repository: zwbproducts/HackerRank-Solutions
-Location: /home/vboxuser/Templates/HackerSol
-Status: ⚠️  MULTIPLE CRITICAL ISSUES FOUND
-Severity: HIGH
-Issues Identified: 5 major categories
+This PR fixes repository-hygiene issues that made the repo awkward to use in shells and automation:
 
+- Removes **spaces** from solution filenames (shell/CI-safe paths).
+- Standardizes solution filenames to **snake_case**.
+- Organizes solutions into **language-based folders**.
+- Adds missing **project documentation**.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- CRITICAL BUGS FOUND
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## Problems found (and fixed)
 
-🔴 BUG #1: FILENAMES WITH SPACES (CRITICAL) - 18 AFFECTED FILES
-──────────────────────────────────────────────────────────────────
+### 1) Critical: filenames with spaces
 
-Affected Files:
-  1. algo rotation.c
-  2. angry children.cpp
-  3. bus station.c
-  4. cavity map.c
-  5. ceasar cipher.c
-  6. chocolate feast.c
-  7. cut the sticks.c
-  8. find digits.c
-  9. find median.cpp
-  10. grid search.c
-  11. k candy store.c
-  12. manasa and stones.c
-  13. minimum draws.cpp
-  14. running time.cpp
-  15. service lane.c
-  16. sherlock and beast.c
-  17. songs of pi.cpp
-  18. utopian tree.cpp
+**Problem:** Many source files used spaces in filenames (e.g., `algo rotation.c`).
 
-Impact:
-  ❌ Shell scripts break with "file not found" errors
-  ❌ Build automation fails
-  ❌ CI/CD pipelines crash
-  ❌ Git operations fail intermittently
-  ❌ Impossible to use with standard Unix tools
+**Impact:** Breaks common tooling and CI scripts unless everything is carefully quoted.
 
-Example Failure:
-  $ for f in *.c; do gcc $f; done
-  gcc: error: algo: No such file or directory
-  gcc: error: rotation.c: No such file or directory
+**Fix:** Renamed to snake_case with no spaces and moved under `solutions/`.
 
-Solution:
-  Rename all files to use underscores (e.g., algo_rotation.c)
+### 2) Missing docs
 
+**Problem:** No README / contributing guidance / style guidance / changelog / code of conduct.
 
-🟡 BUG #2: MISSING DOCUMENTATION
-──────────────────────────────────────────
+**Fix:** Added:
+- `README.md`
+- `CONTRIBUTING.md`
+- `CHANGELOG.md`
+- `CODE_STYLE.md`
+- `CODE_OF_CONDUCT.md`
+- `solutions/README.md`
 
-Missing:
-  ❌ README.md (project overview)
-  ❌ CONTRIBUTING.md (contributor guidelines)
-  ❌ CHANGELOG.md (version history)
-  ❌ CODE_OF_CONDUCT.md
-  ❌ CODE_STYLE.md (coding standards)
+### 3) Flat repo structure
 
-Impact:
-  • New users don't know what the project contains
-  • No contribution guidelines
-  • Difficult for first-time contributors
-  • No professional documentation
+**Problem:** All solution files were in the repository root.
 
-Solution:
-  Add comprehensive markdown documentation files
+**Fix:** Introduced:
+- `solutions/c/` (C)
+- `solutions/cpp/` (C++)
 
+### 4) Extension/code mismatch
 
-🟡 BUG #3: POOR REPOSITORY STRUCTURE
-──────────────────────────────────────────
+**Problem:** Several `.c` files were actually C++ (e.g., `#include <iostream>`).
 
-Current:
-  HackerSol/
-  ├── algo rotation.c
-  ├── angry children.cpp
-  ├── bus station.c
-  ├── ... (18 more files in root)
-  └── LICENSE
+**Fix:** Moved those to `solutions/cpp/` and renamed them to `.cpp`.
 
-Problems:
-  ❌ All 19 source files in root directory
-  ❌ No categorization by difficulty
-  ❌ No separation by topic
-  ❌ Impossible to navigate
+## File moves / renames
 
-Solution:
-  Organize into directories:
-  - easy/ (4 files)
-  - medium/ (10 files)
-  - hard/ (7 files)
+C:
+- `ceasar cipher.c` → `solutions/c/caesar_cipher.c`
 
+C++:
+- `algo rotation.c` → `solutions/cpp/algo_rotation.cpp`
+- `Angryprofessor.c` → `solutions/cpp/angry_professor.cpp`
+- `angry children.cpp` → `solutions/cpp/angry_children.cpp`
+- `bus station.c` → `solutions/cpp/bus_station.cpp`
+- `cavity map.c` → `solutions/cpp/cavity_map.cpp`
+- `chocolate feast.c` → `solutions/cpp/chocolate_feast.cpp`
+- `cut the sticks.c` → `solutions/cpp/cut_the_sticks.cpp`
+- `find digits.c` → `solutions/cpp/find_digits.cpp`
+- `find median.cpp` → `solutions/cpp/find_median.cpp`
+- `flowers.cpp` → `solutions/cpp/flowers.cpp`
+- `grid search.c` → `solutions/cpp/grid_search.cpp`
+- `k candy store.c` → `solutions/cpp/k_candy_store.cpp`
+- `manasa and stones.c` → `solutions/cpp/manasa_and_stones.cpp`
+- `minimum draws.cpp` → `solutions/cpp/minimum_draws.cpp`
+- `running time.cpp` → `solutions/cpp/running_time.cpp`
+- `service lane.c` → `solutions/cpp/service_lane.cpp`
+- `sherlock and beast.c` → `solutions/cpp/sherlock_and_beast.cpp`
+- `songs of pi.cpp` → `solutions/cpp/songs_of_pi.cpp`
+- `utopian tree.cpp` → `solutions/cpp/utopian_tree.cpp`
 
-🟡 BUG #4: INCONSISTENT CODE QUALITY
-──────────────────────────────────────────
+## How to build
 
-Issues Found:
-  ❌ Mixed C and C++ includes
-  ❌ Single-letter variable names (a[1000], t, n, k)
-  ❌ No input validation
-  ❌ Magic numbers without explanation
-  ❌ Inconsistent formatting style
+See `README.md` for simple compile/run examples.
 
-Example (Angryprofessor.c):
-  #include <cstdio>      // C++ header
-  int a[1000];           // Hard-coded size, unsafe
-  if(count<k)            // No space around operator
+## Notes
 
-Solution:
-  Add CODE_STYLE.md and normalize all files
-
-
-🟡 BUG #5: POOR GIT HISTORY
-──────────────────────────────────────────
-
-Issues:
-  ❌ Only 21 commits total
-  ❌ Generic commit messages ("Create filename.ext")
-  ❌ No semantic versioning
-  ❌ No detailed changelog
-
-Current:
-  ❌ "Create angry children.cpp"
-  ❌ "Create find median.cpp"
-
-Should be:
-  ✅ "feat: add solution for Angry Professor problem"
-  ✅ "docs: add explanation and test cases"
-
-Solution:
-  Improve future commit messages using semantic conventions
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- PROPOSED FIXES
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-This PR will:
-
-✅ PHASE 1: Fix Critical Bug
-   Rename 18 files to remove spaces
-   Replace spaces with underscores
-   Example: "algo rotation.c" → "easy/array_rotation.c"
-
-✅ PHASE 2: Add Documentation
-   + README.md (comprehensive guide)
-   + CONTRIBUTING.md (contributor guidelines)
-   + CODE_STYLE.md (coding standards)
-   + CHANGELOG.md (version history)
-   + CODE_OF_CONDUCT.md (community rules)
-
-✅ PHASE 3: Organize Structure
-   Create directories:
-   - easy/ directory
-   - medium/ directory
-   - hard/ directory
-   Move and rename all files accordingly
-
-✅ PHASE 4: Improve Code Quality
-   Add comments explaining algorithms
-   Add time/space complexity analysis
-   Standardize formatting
-
-✅ PHASE 5: Better Git Practices
-   Add guidelines for semantic commits
-   Document contribution process
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- FILES TO CHANGE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-RENAMED FILES:
-  algo rotation.c → easy/array_rotation.c
-  angry children.cpp → medium/angry_professor.cpp
-  Angryprofessor.c → medium/angry_professor.c
-  bus station.c → medium/bus_station.c
-  cavity map.c → medium/cavity_map.c
-  ceasar cipher.c → medium/caesar_cipher.c
-  chocolate feast.c → easy/chocolate_feast.c
-  cut the sticks.c → medium/cut_the_sticks.c
-  find digits.c → easy/find_digits.c
-  find median.cpp → hard/find_median.cpp
-  grid search.c → hard/grid_search.c
-  k candy store.c → medium/k_candy_store.c
-  manasa and stones.c → medium/manasa_and_stones.c
-  minimum draws.cpp → easy/minimum_draws.cpp
-  running time.cpp → medium/running_time.cpp
-  service lane.c → medium/service_lane.c
-  sherlock and beast.c → medium/sherlock_and_beast.c
-  songs of pi.cpp → medium/songs_of_pi.cpp
-  utopian tree.cpp → easy/utopian_tree.cpp
-
-NEW FILES (Documentation):
-  + README.md
-  + CONTRIBUTING.md
-  + CODE_STYLE.md
-  + CHANGELOG.md
-  + CODE_OF_CONDUCT.md
-  + easy/README.md
-  + medium/README.md
-  + hard/README.md
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- IMPACT ASSESSMENT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-BEFORE:
-  ❌ Filenames with spaces (shell incompatible)
-  ❌ No documentation
-  ❌ Flat structure (all files in root)
-  ❌ Inconsistent code style
-  ❌ Poor git history
-  ❌ Not production-ready
-
-AFTER:
-  ✅ All filenames compatible
-  ✅ Professional documentation
-  ✅ Organized by difficulty
-  ✅ Consistent code quality
-  ✅ Clear contribution guidelines
-  ✅ Production-ready
-
-BENEFITS:
-  • Works with all build systems
-  • Easier for new contributors
-  • Better for CI/CD integration
-  • More professional appearance
-  • Better discoverability
-  • Enterprise-grade quality
-
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- STATISTICS
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Changes:
-  Files Renamed: 19
-  Files Created: 8
-  Lines of Documentation: ~1000+
-  Total Changes: ~1500 lines
-
-Quality Improvements:
-  Documentation: 0% → 100%
-  Code Organization: 0% → 100%
-  Shell Compatibility: 10% → 100%
-
-
-╔════════════════════════════════════════════════════════════════════════════════╗
-║                                                                                ║
-║                   ✅ READY FOR PULL REQUEST SUBMISSION                        ║
-║                                                                                ║
-║             All issues documented, analyzed, and solutions provided            ║
-║                 This PR makes the repo production-ready                        ║
-║                                                                                ║
-╚════════════════════════════════════════════════════════════════════════════════╝
-
-Location: /home/vboxuser/Templates/HackerSol/
-Analysis Date: January 28, 2026
-Status: READY FOR PR
+This PR intentionally focuses on repository usability and maintainability. It does not attempt to rewrite algorithms or change solution behavior.
